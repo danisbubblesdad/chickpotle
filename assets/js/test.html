@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+<script src="geolocation.js"></script>
+<script src="findPlace.js"></script>
+<script src="cartesianProduct.js"></script>
+<script src="optimizeRoute.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY"></script>
+
+<script>
+
+  var userLocation;
+
+  findUserLocation.then(function(response) {
+    // Do we need session storage?
+    userLocation = response;
+  }).catch(function() {
+
+    // Alternate manual entry flow
+
+  }).then(function() {
+    test = searchChickpotle(userLocation);
+  })
+
+
+</script>
+
+</head>
+<body>
+</body>
+</html>
