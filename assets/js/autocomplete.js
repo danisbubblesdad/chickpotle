@@ -11,15 +11,18 @@
       {types: ['geocode']});
 
     // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
+    // field in the form and pass the address to getCoordinates function.
     autocomplete.addListener('place_changed', getCoordinates);
   }
 
+// This gets the address from the autocomplete field and converts it to
+// latitude/longitude coordinates
   function getCoordinates() {
     var place = autocomplete.getPlace();
     var latitude = place.geometry.location.lat();
     var longitude = place.geometry.location.lng();
 
+// Store the coordinates so they can be used by the functions called in main.html
     localStorage.setItem("latitude", latitude);
     localStorage.setItem("longitude", longitude);
   }
