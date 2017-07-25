@@ -6,27 +6,52 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 <script src="geolocation.js"></script>
-<script src="findPlace.js"></script>
+<script src="findPlaces.js"></script>
 <script src="cartesianProduct.js"></script>
 <script src="optimizeRoute.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY"></script>
 
 <script>
+  var chickfilas;
+  var chipotles;
+  var candidateChickpotles;
+  var test;
 
-  var userLocation;
 
-  findUserLocation.then(function(response) {
-    // Do we need session storage?
-    userLocation = response;
-  }).catch(function() {
-
-    // Alternate manual entry flow
-
+// Setup promise chain so that asynchronous calls complete before the next step
+// Try to geolocate user
+  findUserLocation.then()
+    // Redirect user to manualAddress.html
+    // ****HOW DOES THIS WORK WITH RESOLVE --> WE WANT TO WAIT UNTIL EITHER RESOLVE OR CATCH EXECUTES BEFORE MOVING TO NEXT STEP
+    // Deal with later
+    .catch(function() {
   }).then(function() {
-    test = searchChickpotle(userLocation);
+    // Gather names and IDs for all nearby Chick-fil-A and Chipotle restaurants
+    return Promise.all([
+      gatherNearbyGooglePlacesFor("Chick-fil-A"),
+      gatherNearbyGooglePlacesFor("Chipotle Mexican Grill")
+    ])
+  }).then(function(results) {
+    // Wait until both promises are fulfilled and then assign the results
+    // to the appropriate variables
+    chickfilas = results[0];
+    chipotles = results[1];
+  }).then(function() {
+    return Promise.all([
+      getAddressesFor(chickfilas),
+      getAddressesFor(chipotles)
+    ])
+  }).then(function(results) {
+    chickfilas = results[0];
+    chipotles = results[1];
+  }).then(function(results) {
+    candidateChickpotles = cartesianProductOf(chickfilas,chipotles);
+  }).then(function() {
+    return reportTravelTimes(candidateChickpotles);
+  }).then(function(results) {
+    console.log(results);
   })
-
 
 </script>
 

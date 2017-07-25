@@ -22,9 +22,9 @@ let findUserLocation = new Promise(function(resolve, reject) {
   // if successful, inject coordinates into applicable variables
   function success(position) {
     // Declares global variables
-     let lat = position.coords.latitude;
-     let long = position.coords.longitude;
-     resolve([lat, long]);
+    localStorage.setItem("latitude", position.coords.latitude);
+    localStorage.setItem("longitude", position.coords.longitude);
+    resolve();
 
      //For manual latlong testing:
     //latitude = 37.663502;
