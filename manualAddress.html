@@ -31,10 +31,10 @@
         <p style="background-position:top;font-size:24px;text-align:center;margin-right:43px;margin-left:53px;">Hmm... we couldnt find your location. Do you mind typing in your current address?</p>
     </div>
     <div style="margin-right:auto;margin-left:auto;text-align:center;height:94px;">
-        <input id="autocomplete" onFocus="geolocate()" type="text" required="" placeholder="Address" style="margin-right:auto;margin-left:auto;/*padding:0px;*//*margin-bottom:0px;*/width:222px;text-align:center;">
+        <input id="autocomplete" type="text" required="" placeholder="Address" style="margin-right:auto;margin-left:auto;/*padding:0px;*//*margin-bottom:0px;*/width:222px;text-align:center;">
     </div>
     <div style="margin-right:auto;margin-left:auto;text-align:center;font-style:normal;">
-        <button class="btn btn-default btn-lg" type="submit" style="color:rgb(255,255,255);background-color:#e84e40;width:144px;height:70px;font-size:23px;font-weight:normal;/*padding:9px;*/border:none;">Let's Go!</button>
+        <button class="btn btn-default btn-lg" id="letsGoButton" type="submit" style="color:rgb(255,255,255);background-color:#e84e40;width:144px;height:70px;font-size:23px;font-weight:normal;/*padding:9px;*/border:none;" >Let's Go!</button>
     </div>
     <script src="assets/js/autocomplete.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1W9qErByf6GQxY_vgA8uLzJr1rtG_Wu8&libraries=places&callback=initAutocomplete" async defer></script>
@@ -42,5 +42,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="assets/js/script.min.js"></script>
 </body>
-    
+
 </html>

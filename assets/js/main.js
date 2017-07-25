@@ -1,3 +1,14 @@
+////////////// Load screen
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+}
+
+//////////// Geolocation
+
+
+
 var chickfilas;
 var chipotles;
 var candidateChickpotles;
@@ -51,6 +62,7 @@ function click() {
 
 // Setup promise chain so that asynchronous calls complete before the next step
 // Try to geolocate user
+
 findUserLocation.then()
   // Redirect user to manualAddress.html
   // ****HOW DOES THIS WORK WITH RESOLVE --> WE WANT TO WAIT UNTIL EITHER RESOLVE OR CATCH EXECUTES BEFORE MOVING TO NEXT STEP
@@ -104,4 +116,5 @@ findUserLocation.then()
   //available properties are: addresses, IDs, and trip duration (in seconds)
   chickpotle = results[0];
   console.log(chickpotle);
+  showPage();
 })

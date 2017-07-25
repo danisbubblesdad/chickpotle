@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
-    <script src="assets/js/main.js"></script>    
-    <script src="assets/js/geolocation.js"></script>
+    <script src="assets/js/main.js"></script>
     <script src="assets/js/findPlaces.js"></script>
     <script src="assets/js/cartesianProduct.js"></script>
     <script src="assets/js/optimizeRoute.js"></script>
@@ -34,24 +33,23 @@
         </div>
     </nav>
     <div class="row">
+      <div id="loader"></div>
 
-<div class="col-9 right">
-  <img class ="img-responsive" src="assets/img/staticmap_en.png">
-</div>
+      <div style="display:none;" id="mainContent" class="animate-bottom">
+        <div class="col-9 right">
+          <img class ="img-responsive" src="assets/img/staticmap_en.png">
+        </div>
 
-<div class="col-3 menu">
-  <ul>
-    <li>Address 1</li>
-    <li>Address 2</li>
-    <li>Address 3</li>
-    <li>Address 4</li>
-  </ul>
-</div>
-
-
-
-
-</div>
+        <div class="col-3 menu">
+          <ul>
+            <li>Address 1</li>
+            <li>Address 2</li>
+            <li>Address 3</li>
+            <li>Address 4</li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="assets/js/script.min.js"></script>
