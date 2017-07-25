@@ -24,8 +24,10 @@ function reportTravelTimes(candidateChickpotles) {
           chickpotle = {
             chickfila_address: candidateChickpotle[0].address,
             chickfila_place_id: candidateChickpotle[0].place_id,
+            chickfila_location: candidateChickpotle[0].location,
             chipotle_address: candidateChickpotle[1].address,
             chipotle_place_id: candidateChickpotle[1].place_id,
+            chipotle_location: candidateChickpotle[1].location,
             duration: duration
           }
 

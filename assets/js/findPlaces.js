@@ -62,6 +62,7 @@ function getAddressesFor(places) {
       $.get(placeDetailsURL).then(function(placeDetails) {
         // Once pull is complete, assign address property object
         place.address = placeDetails.result.formatted_address;
+        place.location = placeDetails.result.geometry.location;
         // resolve promise
         resolve(place);
       })
