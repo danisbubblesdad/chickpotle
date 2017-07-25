@@ -37,3 +37,7 @@ let findUserLocation = new Promise(function(resolve, reject) {
 
 
 })
+
+function click() {
+  alert("CLICKER");
+}
