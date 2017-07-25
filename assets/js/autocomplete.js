@@ -21,7 +21,8 @@
     var place = autocomplete.getPlace();
     var latitude = place.geometry.location.lat();
     var longitude = place.geometry.location.lng();
-    console.log(latitude, longitude);
+    var coords = latitude + ", " + longitude;
+    console.log(coords);
     
 // Store the coordinates so they can be used by the functions called in main.html
     localStorage.setItem("latitude", latitude);
