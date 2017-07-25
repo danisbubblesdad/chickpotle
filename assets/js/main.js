@@ -47,7 +47,7 @@ function initMap() {
     title: "Chipotle"
   });
 
-// Adjust zoom to all markers  
+// Adjust zoom to all markers
 
   bounds.extend(userMarker.position);
   bounds.extend(chipotleMarker.position);
@@ -69,15 +69,31 @@ var candidateChickpotles;
 var chickpotle;
 var test;
 
+
 // From geolocation.js
 // Use HTML5 Geolocation to gather a users location (requires HTTPS) and query
 // for nearby restaurant Google Place IDs
+
+let manualAddressEntered = localStorage.getItem("manualAddressEntered");
+if (manualAddressEntered === 'true') {
+  manualAddressEntered = true;
+} else {
+  manualAddressEntered = false;
+}
+
+console.log(manualAddressEntered)
 
 
 var findUserLocation = new Promise(function(resolve, reject) {
 
 
+
+
   if(!navigator.geolocation) {
+
+    if (manualAddressEntered) {
+      console.log(manualAddressEntered);
+    }
 
 
     // If user declines geolocation or does not have a capable browser,
@@ -104,7 +120,12 @@ var findUserLocation = new Promise(function(resolve, reject) {
   }
 
   function error(error) {
-    reject(error);
+    if (manualAddressEntered) {
+      resolve();
+    } else {
+      reject(error);
+    }
+
   }
 
 
@@ -172,4 +193,5 @@ findUserLocation.then()
   console.log(chickpotle);
   initMap();
   showPage();
+  window.localStorage.clear();
 })
