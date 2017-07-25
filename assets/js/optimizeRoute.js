@@ -3,31 +3,43 @@
 
 function reportTravelTimes(candidateChickpotles) {
 
+// Create array to store x promises from forEach loop
+
   var promises = []
 
-
-
   candidateChickpotles.forEach(function(candidateChickpotle) {
+    //instaniate chickpotle object
     var chickpotle = {};
+
+    //create promise
     var promise = new Promise(function(resolve, reject) {
 
+    // send the individual candidateChickpotle object to the calculateTravelTime
+    // method with the false boolean
       calculateTravelTime(candidateChickpotle, false)
         .then(function(duration) {
-          // Returns duration
+          // Once the JSON pull has processed, create chickpotle object
+          // using data from candidateChickpotle object and trip duration
+          // gathered from API pull
           chickpotle = {
-            "chickfila address": candidateChickpotle[0].address,
-            "chickfila place_id": candidateChickpotle[0].place_id,
-            "chipotle address": candidateChickpotle[1].address,
-            "chipotle place_id": candidateChickpotle[1].place_id,
+            chickfila_address: candidateChickpotle[0].address,
+            chickfila_place_id: candidateChickpotle[0].place_id,
+            chipotle_address: candidateChickpotle[1].address,
+            chipotle_place_id: candidateChickpotle[1].place_id,
             duration: duration
           }
+
+          // Send resolve back to promise
           resolve(chickpotle);
         })
 
     })
+
+    // Send promise to promises array
     promises.push(promise);
   })
 
+  // Promise all promises as a gate
   return Promise.all(promises)
 
 }
@@ -35,92 +47,76 @@ function reportTravelTimes(candidateChickpotles) {
 
 function calculateTravelTime(candidateChickpotle, stopoverBoolean) {
 
-    return new Promise(function(resolve, reject) {
-      var travelTime;
-      let leg1 = candidateChickpotle[0].address;
-      let leg2 = candidateChickpotle[1].address;
-      let latitude = parseInt(localStorage.getItem("latitude"));
-      let longitude = parseInt(localStorage.getItem("longitude"));
+  return new Promise(function(resolve, reject) {
+
+    var duration;
+    let leg1 = candidateChickpotle[0].address;
+    let leg2 = candidateChickpotle[1].address;
+    let latitude = parseFloat(localStorage.getItem("latitude"));
+    let longitude = parseFloat(localStorage.getItem("longitude"));
 
 
-      // Instantiate a directions service.
-      directionsService = new google.maps.DirectionsService();
 
-      directionsService.route({
-        origin: {lat: latitude, lng: longitude},
-        destination: {lat: latitude, lng: longitude},
-        waypoints: [{
-          location: leg1,
-          stopover: stopoverBoolean
-        }, {
-          location: leg2,
-          stopover: stopoverBoolean
-        }],
-        optimizeWaypoints: true,
-        travelMode: 'DRIVING'
-      }, function(response, status) {
-        if (status === 'OK') {
-          var route = response.routes[0];
-          travelTime = route.legs[0].duration.value;
-        }
+    // Instantiate a directions service.
+    directionsService = new google.maps.DirectionsService();
+
+    // Provide lat/long data from localStorage as well as information from
+    // candidateChickpotle
+
+    directionsService.route({
+      origin: {lat: latitude, lng: longitude},
+      destination: {lat: latitude, lng: longitude},
+      waypoints: [{
+        location: leg1,
+        stopover: stopoverBoolean
+      },{
+        location: leg2,
+        stopover: stopoverBoolean
+      }],
+      optimizeWaypoints: true,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+
+      // This is the "OK" callback from the Google API
+      if (status === 'OK') {
+        var route = response.routes[0];
+        // Trip duration is grabbed from the response
+        duration = route.legs[0].duration.value;
+        // Fulfill promise with travelTime (AKA trip duration)
+        resolve(duration);
+      } else {
+        // If "OK" callback not received, try again
+        setTimeout(function() {
+          resolve(calculateTravelTime(candidateChickpotle, stopoverBoolean));
+        }, 5)
       }
-    ).then(function() {
-      resolve(travelTime);
-    });
-
-    })
-
-
-/**
-var travelTime;
-
-// Instantiate a directions service.
-directionsService = new google.maps.DirectionsService();
-
-directionsService.route({
-  origin: {lat: latitude, lng: longitude},
-  destination: {lat: latitude, lng: longitude},
-  waypoints: [{
-    location: leg1,
-    stopover: stopoverBoolean
-  },{
-    location: leg2,
-    stopover: stopoverBoolean
-  }],
-  optimizeWaypoints: true,
-  travelMode: 'DRIVING'
-}, function(response, status) {
-  if (status === 'OK') {
-    var route = response.routes[0];
-
-    if (route.legs[0].duration.value !== undefined) {
-        clearInterval(_asyncCheck);
-        travelTime = route.legs[0].duration.value;
-        travelTimes.push([[travelTime],[leg1],[leg2]]);
-        selectOptimalPair(travelTimes);
     }
-
-    }
-  }
-);
-**/
-
-
+    );
+  })
 }
 
-function selectOptimalPair(travelTimes) {
-  while (travelTimes.length > 1) {
-    if (travelTimes[0][0] > travelTimes[1][0]) {
-      travelTimes.splice(0, 1);
-    } else {
-      travelTimes.splice(1, 1);
+function selectOptimalChickpotle(candidateChickpotles) {
+
+  return new Promise(function(resolve, reject) {
+
+    // Execute loop if candidate array is longer than 1 object
+
+    while (candidateChickpotles.length > 1) {
+
+      // Find the highest duration value between the 0 index and the 1 index
+      if (candidateChickpotles[0].duration > candidateChickpotles[1].duration) {
+        // If 0 index is higher, remove the corresponding object from the array
+        candidateChickpotles.splice(0,1);
+      } else {
+        // Otherwise, remove the 1 index object from the array
+        candidateChickpotles.splice(1,1);
+      }
     }
 
-  }
-  console.log("Chickpotle calculated");
-  chickpotle = {
-    Chickfila: travelTimes[0][1],
-    Chipotle: travelTimes[0][2],
-    Duration: Math.round(travelTimes[0][0]/60)
-  }
+    // fulfill promise
+
+    resolve(candidateChickpotles);
+  })
+
+
 }

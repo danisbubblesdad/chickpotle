@@ -8,18 +8,25 @@
         var longitude = localStorage.getItem("longitude");
         // Replace spaces with special character for URL only
         var urlSearchTerm = searchTerm.replace(/ /g, "&nbsp;");
-        var nearbySearchURL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY&radius=50000';
+        var key = "?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
+        var radius = "&radius=32187"; // radius is set to 20 miles
 
+        var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+
+        // populate JSON url with Google key
+        url += key;
+        //populate JSON url with radius;
+        url += radius;
         //populate JSON url with lat/longitude
-        nearbySearchURL += "&location=" + latitude + "," + longitude;
+        url += "&location=" + latitude + "," + longitude;
 
         // populate JSON url with search term/name of restaurant
 
-        nearbySearchURL += "&name=" + urlSearchTerm;
+        url += "&name=" + urlSearchTerm;
 
-        // Request google place objects using custom nearbySearchURL
+        // Request google place objects using custom url
 
-        $.get(nearbySearchURL).then(function(googlePlaceObject) {
+        $.get(url).then(function(googlePlaceObject) {
 
           // Iterate through each object to extract place_id and
           for(i=0; i<googlePlaceObject.results.length; i++) {
@@ -35,63 +42,36 @@
           // return the array to the promise
           resolve(places);
         })
-
-
       });
 
   }
 
-
 function getAddressesFor(places) {
-
+  // create promises array for looped promises
   var promises = []
 
+  // loop through each place object, create a promise
   for(i=0; i<places.length; i++) {
     var promise = new Promise(function(resolve, reject) {
+      // append place ID to URL for JSON request
       let placeDetailsURL = "https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY&placeid=";
       let place = places[i];
       placeDetailsURL += place.place_id;
+
+      // Execute JSON pull
       $.get(placeDetailsURL).then(function(placeDetails) {
+        // Once pull is complete, assign address property object
         place.address = placeDetails.result.formatted_address;
+        // resolve promise
         resolve(place);
       })
     })
+
+    // add looped promise to array
     promises.push(promise);
   }
 
-
-
+  // Run all promises as gate
   return Promise.all(promises);
 
 }
-
-
-
-
-  // function getAddressesFor(places) {
-  //   return new Promise(function(resolve, reject) {
-  //
-  //     var promises = [];
-  //
-  //     // iterate through each place object and grab ID
-  //     for(i=0; i<places.length; i++) {
-  //       // setup custom URL
-  //       let placeDetailsURL = "https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY&placeid=";
-  //       // isolate place object from array
-  //       let place = places[i];
-  //       // pull place_ID from place object and append to custom URL for JSON call
-  //       placeDetailsURL += place.place_id;
-  //       // Perform JSON call
-  //       $.get(placeDetailsURL).then(function(placeDetails) {
-  //         // Once JSON call completes, add new address property to object
-  //         // assign Google's formatted address to that property
-  //         place.address = placeDetails.result.formatted_address;
-  //         console.log("Got address for " + place.place_id);
-  //       })
-  //
-  //       resolve(places);
-  //     }
-  //     // Return the updated array to the promise
-  //
-  //   })
-  // }

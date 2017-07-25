@@ -16,6 +16,7 @@
   var chickfilas;
   var chipotles;
   var candidateChickpotles;
+  var chickpotle;
   var test;
 
 
@@ -33,24 +34,46 @@
       gatherNearbyGooglePlacesFor("Chipotle Mexican Grill")
     ])
   }).then(function(results) {
-    // Wait until both promises are fulfilled and then assign the results
+    // Wait until both promises are fulfilled and then assign the place IDs
     // to the appropriate variables
     chickfilas = results[0];
     chipotles = results[1];
   }).then(function() {
+    // Use the place IDs to query on the addresses; update chickfilas and
+    // chipotles objects with appropriate properties
+    // Create gate on both JSON requests
     return Promise.all([
       getAddressesFor(chickfilas),
       getAddressesFor(chipotles)
     ])
   }).then(function(results) {
+    // After gate opens, update chickfilas and chipotles with the latest array
     chickfilas = results[0];
     chipotles = results[1];
   }).then(function(results) {
+    // Combine chickfilas and chipotles objects into every possible unique
+    // combination, where order does not matter
+    // Assign results to new candidateChickpotles object and place in array
     candidateChickpotles = cartesianProductOf(chickfilas,chipotles);
   }).then(function() {
+    // Pass candidateChickpotles objects back to google for directionsService
+    // API query
     return reportTravelTimes(candidateChickpotles);
   }).then(function(results) {
-    console.log(results);
+    // Update candidatesChickpotles objects with duration (of trip) property
+    // in seconds
+    console.log("Results are in");
+    candidateChickpotles = results;
+  }).then(function() {
+    // Send candidatesChickpotle object array (with duration property) to
+    // method that analyzes each object and selects the object with the lowest
+    // duration
+    return selectOptimalChickpotle(candidateChickpotles);
+  }).then(function(results) {
+    // Assigns the winning object to the chickpotle variable
+    //available properties are: addresses, IDs, and trip duration (in seconds)
+    chickpotle = results[0];
+    console.log(chickpotle);
   })
 
 </script>
