@@ -181,14 +181,30 @@ findUserLocation.then()
   //available properties are: addresses, IDs, and trip duration (in seconds)
 
   chickpotle = results[0];
+   
+  //document.getElementById("chickadd").innerHTML = chickpotle.chickfila_address;
+  //document.getElementById("chipadd").innerHTML = chickpotle.chipotle_address; 
+  document.getElementById("duration").innerHTML = Math.floor(chickpotle.duration / 60); 
+    
+  var chickAddress = document.createElement('a');
+  chickAddress.textContent = chickpotle.chickfila_address;
+  chickAddress.href ='http://maps.google.com/?q='+ chickpotle.chickfila_address;
+  document.getElementById('chickadd').appendChild(chickAddress);
+    
+  var chipAddress = document.createElement('a');
+  chipAddress.textContent = chickpotle.chickfila_address;
+  chipAddress.href ='http://maps.google.com/?q='+ chickpotle.chickfila_address;
+  document.getElementById('chipadd').appendChild(chipAddress);
+    
   initMap();
   showPage();
   // console.log(chickpotle);
-  var chickaddress = chickpotle.chickfila_address;
-  var chipaddress = chickpotle.chipotle_address;
-  console.log(chickaddress);
-  console.log(chipaddress);
+//  var chickaddress = chickpotle.chickfila_address;
+//  var chipaddress = chickpotle.chipotle_address;
+//  console.log(chickaddress);
+//  console.log(chipaddress);
   // document.getElementById("chickadd").innerHTML = "test";
   // document.getElementById("chipadd").innerHTML = "test";
   //window.localStorage.clear();
 })
+ console.log(chickpotle)   
