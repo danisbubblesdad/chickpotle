@@ -183,5 +183,12 @@ findUserLocation.then()
   chickpotle = results[0];
   initMap();
   showPage();
+  // console.log(chickpotle);
+  var chickaddress = chickpotle.chickfila_address;
+  var chipaddress = chickpotle.chipotle_address;
+  console.log(chickaddress);
+  console.log(chipaddress);
+  // document.getElementById("chickadd").innerHTML = "test";
+  // document.getElementById("chipadd").innerHTML = "test";
   //window.localStorage.clear();
 })
