@@ -55,85 +55,75 @@ function initMap() {
   map.fitBounds(bounds);
 
 
-
-
 }
 
 //////////// Geolocation
 
-
+var latitude;
+var longitude;
 
 var chickfilas;
 var chipotles;
 var candidateChickpotles;
 var chickpotle;
 var test;
+var manualAddressEntered;
 
-
-// From geolocation.js
-// Use HTML5 Geolocation to gather a users location (requires HTTPS) and query
-// for nearby restaurant Google Place IDs
-
-let manualAddressEntered = localStorage.getItem("manualAddressEntered");
-if (manualAddressEntered === 'true') {
+if (localStorage.getItem("manualAddressEntered") === "true") {
   manualAddressEntered = true;
 } else {
   manualAddressEntered = false;
 }
 
-console.log(manualAddressEntered)
+// From geolocation.js
+// Use HTML5 Geolocation to gather a users location (requires HTTPS) and query
+// for nearby restaurant Google Place IDs
 
 
 var findUserLocation = new Promise(function(resolve, reject) {
 
-
-
-
-  if(!navigator.geolocation) {
-
-    if (manualAddressEntered) {
-      console.log(manualAddressEntered);
-    }
-
-
-    // If user declines geolocation or does not have a capable browser,
-    // present manual address form
-    reject();
+  if (manualAddressEntered) {
+    latitude = parseFloat(localStorage.getItem("latitude"));
+    longitude = parseFloat(localStorage.getItem("longitude"));
+    alert("alt flow");
+    resolve();
 
 
   } else {
 
-    // If browser is geolocation-capable, query for user's current position
-    navigator.geolocation.getCurrentPosition(success, error);
+    if(!navigator.geolocation) {
+      // If user declines geolocation or does not have a capable browser,
+      // present manual address form
+      reject();
+
+    } else {
+      // If browser is geolocation-capable, query for user's current position
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
   }
+
 
   // if successful, inject coordinates into applicable variables
   function success(position) {
+    //For manual latlong testing:
+   localStorage.setItem("latitude", 33.960948);
+   localStorage.setItem("longitude", -83.3779358);
+
+
     // Declares global variables
-    localStorage.setItem("latitude", position.coords.latitude);
-    localStorage.setItem("longitude", position.coords.longitude);
+    // localStorage.setItem("latitude", position.coords.latitude);
+    // localStorage.setItem("longitude", position.coords.longitude);
     resolve();
 
-     //For manual latlong testing:
-    //latitude = 37.663502;
-    //longitude = -122.137430;
+
   }
 
   function error(error) {
-    if (manualAddressEntered) {
-      resolve();
-    } else {
-      reject(error);
-    }
-
+    reject(error);
   }
 
 
 })
-
-function click() {
-  alert("CLICKER");
-}
 
 // Setup promise chain so that asynchronous calls complete before the next step
 // Try to geolocate user
@@ -144,7 +134,7 @@ findUserLocation.then()
   // Deal with later
   .catch(function() {
     window.location.replace("manualAddress.html");
-}).then(function() {
+}).then(function(results) {
   // Gather names and IDs for all nearby Chick-fil-A and Chipotle restaurants
   return Promise.all([
     gatherNearbyGooglePlacesFor("Chick-fil-A"),
@@ -189,9 +179,9 @@ findUserLocation.then()
 }).then(function(results) {
   // Assigns the winning object to the chickpotle variable
   //available properties are: addresses, IDs, and trip duration (in seconds)
+
   chickpotle = results[0];
-  console.log(chickpotle);
   initMap();
   showPage();
-  window.localStorage.clear();
+  //window.localStorage.clear();
 })

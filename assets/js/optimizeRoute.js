@@ -9,6 +9,7 @@ function reportTravelTimes(candidateChickpotles) {
 
   candidateChickpotles.forEach(function(candidateChickpotle) {
     //instaniate chickpotle object
+
     var chickpotle = {};
 
     //create promise
@@ -16,24 +17,24 @@ function reportTravelTimes(candidateChickpotles) {
 
     // send the individual candidateChickpotle object to the calculateTravelTime
     // method with the false boolean
-      calculateTravelTime(candidateChickpotle, false)
-        .then(function(duration) {
-          // Once the JSON pull has processed, create chickpotle object
-          // using data from candidateChickpotle object and trip duration
-          // gathered from API pull
-          chickpotle = {
-            chickfila_address: candidateChickpotle[0].address,
-            chickfila_place_id: candidateChickpotle[0].place_id,
-            chickfila_location: candidateChickpotle[0].location,
-            chipotle_address: candidateChickpotle[1].address,
-            chipotle_place_id: candidateChickpotle[1].place_id,
-            chipotle_location: candidateChickpotle[1].location,
-            duration: duration
-          }
+    calculateTravelTime(candidateChickpotle, false)
+      .then(function(duration) {
+        // Once the JSON pull has processed, create chickpotle object
+        // using data from candidateChickpotle object and trip duration
+        // gathered from API pull
+        chickpotle = {
+          chickfila_address: candidateChickpotle[0].address,
+          chickfila_place_id: candidateChickpotle[0].place_id,
+          chickfila_location: candidateChickpotle[0].location,
+          chipotle_address: candidateChickpotle[1].address,
+          chipotle_place_id: candidateChickpotle[1].place_id,
+          chipotle_location: candidateChickpotle[1].location,
+          duration: duration
+        }
 
-          // Send resolve back to promise
-          resolve(chickpotle);
-        })
+        // Send resolve back to promise
+        resolve(chickpotle);
+      })
 
     })
 
@@ -49,14 +50,16 @@ function reportTravelTimes(candidateChickpotles) {
 
 function calculateTravelTime(candidateChickpotle, stopoverBoolean) {
 
+
+
   return new Promise(function(resolve, reject) {
 
     var duration;
-    let leg1 = candidateChickpotle[0].address;
-    let leg2 = candidateChickpotle[1].address;
-    let latitude = parseFloat(localStorage.getItem("latitude"));
-    let longitude = parseFloat(localStorage.getItem("longitude"));
+    let leg1 = candidateChickpotle[0].location;
+    let leg2 = candidateChickpotle[1].location;
 
+    let userLatitude = parseFloat(localStorage.getItem("latitude"));
+    let userLongitude = parseFloat(localStorage.getItem("longitude"));
 
 
     // Instantiate a directions service.
@@ -66,8 +69,8 @@ function calculateTravelTime(candidateChickpotle, stopoverBoolean) {
     // candidateChickpotle
 
     directionsService.route({
-      origin: {lat: latitude, lng: longitude},
-      destination: {lat: latitude, lng: longitude},
+      origin: {lat: userLatitude, lng: userLongitude},
+      destination: {lat: userLatitude, lng: userLongitude},
       waypoints: [{
         location: leg1,
         stopover: stopoverBoolean
@@ -78,13 +81,15 @@ function calculateTravelTime(candidateChickpotle, stopoverBoolean) {
       optimizeWaypoints: true,
       travelMode: 'DRIVING'
     }, function(response, status) {
-
       // This is the "OK" callback from the Google API
       if (status === 'OK') {
+
+
         var route = response.routes[0];
         // Trip duration is grabbed from the response
         duration = route.legs[0].duration.value;
         // Fulfill promise with travelTime (AKA trip duration)
+        console.log(duration);
         resolve(duration);
       } else {
         // If "OK" callback not received, try again

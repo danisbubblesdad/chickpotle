@@ -32,9 +32,10 @@ function getCoordinates() {
 
 
 
-button = document.getElementById("letsGoButton");
+button = document.getElementById("goButton");
+
+console.log(button);
 
 button.onclick = function() {
   window.location.replace("main.html");
-  alert("working");
 }
