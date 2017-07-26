@@ -1,10 +1,13 @@
 
-  function gatherNearbyGooglePlacesFor(searchTerm, lat, long) {
+  function gatherNearbyGooglePlacesFor(searchTerm) {
+
 
 
       return new Promise(function(resolve, reject) {
 
         var places = [];
+
+
         var latitude = localStorage.getItem("latitude");
         var longitude = localStorage.getItem("longitude");
 
