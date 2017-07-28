@@ -105,13 +105,13 @@ var findUserLocation = new Promise(function(resolve, reject) {
   // if successful, inject coordinates into applicable variables
   function success(position) {
     //For manual latlong testing:
-   localStorage.setItem("latitude", 33.960948);
-   localStorage.setItem("longitude", -83.3779358);
+   // localStorage.setItem("latitude", 33.960948);
+   // localStorage.setItem("longitude", -83.3779358);
 
 
     // Declares global variables
-    // localStorage.setItem("latitude", position.coords.latitude);
-    // localStorage.setItem("longitude", position.coords.longitude);
+    localStorage.setItem("latitude", position.coords.latitude);
+    localStorage.setItem("longitude", position.coords.longitude);
     resolve();
 
 
