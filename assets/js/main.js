@@ -1,12 +1,12 @@
 /////////////// Variable Declarations
 
-var chickfilas;
-var chipotles;
-var candidateChickpotles;
-var chickpotle;
-var manualAddressEntered;
-var googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
-var defaultRadius = 30000;
+let chickfilas;
+let chipotles;
+let candidateChickpotles;
+let chickpotle;
+let manualAddressEntered;
+let defaultRadius = 30000;
+const googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
 
 ////////////// Load screen
 
