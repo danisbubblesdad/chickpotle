@@ -10,7 +10,7 @@
 
         $.get(url).then(function(googlePlaceObject) {
 
-          // Iterate through each object to extract place_id and
+          // Iterate through each object to extract place_id
           for(i=0; i<googlePlaceObject.results.length; i++) {
             let result = googlePlaceObject.results[i];
             if (searchTerm == result.name) {
@@ -61,12 +61,12 @@ function getAddressesFor(places) {
 
 // Create array to store x promises from forEach loop
 
-  var promises = []
+  let promises = []
 
   places.forEach(function(place) {
 
     //create promise
-    var promise = new Promise(function(resolve, reject) {
+    let promise = new Promise(function(resolve, reject) {
 
         geocodePlaceID(place).then(function(results) {
 
