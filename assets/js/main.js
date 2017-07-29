@@ -82,7 +82,7 @@ findUserLocation.then()
   document.getElementById('chickadd').appendChild(chickAddress);
 
   var chipAddress = document.createElement('a');
-  chipAddress.textContent = chickpotle.chickfila_address;
+  chipAddress.textContent = chickpotle.chipotle_address;
   chipAddress.href ='http://maps.google.com/?q='+ chickpotle.chipotle_address;
   document.getElementById('chipadd').appendChild(chipAddress);
 
