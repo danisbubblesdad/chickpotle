@@ -1,5 +1,13 @@
 ////////// maps
 
+function toggleBounce() {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
 function initMap() {
 
   var userLatitude = parseFloat(localStorage.getItem("latitude"));
@@ -41,6 +49,29 @@ var homeIcon = {
     title: "Chick-fil-A",
     icon: chickfilaIcon
   });
+
+  $("#chickfila-results-div").hover(function(){
+    chickfilaMarker.setAnimation(google.maps.Animation.BOUNCE);
+  }, function() {
+    chickfilaMarker.setAnimation(null);
+  });
+
+  $("#chipotle-results-div").hover(function(){
+    chipotleMarker.setAnimation(google.maps.Animation.BOUNCE);
+  }, function() {
+    chipotleMarker.setAnimation(null);
+  });
+
+
+
+  // .hover(function() {
+  //
+  //
+  // }, function() {
+  //   chickfilaMarker.setAnimation(null);
+  //
+  // }),
+
 
 // Set the chipotle marker
 
