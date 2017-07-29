@@ -1,12 +1,5 @@
 //////////// Geolocation
 
-var chickfilas;
-var chipotles;
-var candidateChickpotles;
-var chickpotle;
-var manualAddressEntered;
-var googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
-var defaultRadius = 30000;
 
 if (localStorage.getItem("manualAddressEntered") === "true") {
   manualAddressEntered = true;

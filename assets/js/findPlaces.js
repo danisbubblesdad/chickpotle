@@ -1,11 +1,10 @@
 
   function gatherNearbyGooglePlacesFor(searchTerm, key, radius) {
-    
       return new Promise(function(resolve, reject) {
 
-        var places = [];
+        let places = [];
 
-        url = createGooglePlaceUrl(searchTerm, key, radius);
+        let url = createGooglePlaceUrl(searchTerm, key, radius);
 
         // Request google place objects using custom url
 
@@ -32,15 +31,15 @@
 
 function createGooglePlaceUrl(searchTerm, key, radius) {
 
-  var latitude = localStorage.getItem("latitude");
-  var longitude = localStorage.getItem("longitude");
+  const latitude = localStorage.getItem("latitude");
+  const longitude = localStorage.getItem("longitude");
 
   // Replace spaces with special character for URL only
-  var urlSearchTerm = searchTerm.replace(/ /g, "+");
-  var keyText = "?key="
-  var radiusText = "&radius="; //24140 = 15 miles
+  let urlSearchTerm = searchTerm.replace(/ /g, "+");
+  const keyText = "?key="
+  const radiusText = "&radius="; //24140 = 15 miles
 
-  var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+  let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 
   // populate JSON url with Google key
   url += keyText + key;
@@ -99,8 +98,8 @@ function geocodePlaceID(place) {
 
   return new Promise(function(resolve, reject) {
 
-    var geocoder = new google.maps.Geocoder;
-    var placeId = place.place_id;
+    let geocoder = new google.maps.Geocoder;
+    let placeId = place.place_id;
     geocoder.geocode({'placeId': placeId}, function(results, status) {
       if (status === 'OK') {
         resolve(results);
