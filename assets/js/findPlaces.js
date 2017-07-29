@@ -7,27 +7,7 @@
 
         var places = [];
 
-
-        var latitude = localStorage.getItem("latitude");
-        var longitude = localStorage.getItem("longitude");
-
-        // Replace spaces with special character for URL only
-        var urlSearchTerm = searchTerm.replace(/ /g, "+");
-        var keyText = "?key="
-        var radiusText = "&radius="; //24140 = 15 miles
-
-        var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
-
-        // populate JSON url with Google key
-        url += keyText + key;
-        //populate JSON url with radius;
-        url += radiusText + radius;
-        //populate JSON url with lat/longitude
-        url += "&location=" + latitude + "," + longitude;
-
-        // populate JSON url with search term/name of restaurant
-
-        url += "&name=" + urlSearchTerm;
+        url = createGooglePlaceUrl(searchTerm, key, radius);
 
         // Request google place objects using custom url
 
@@ -50,6 +30,34 @@
       });
 
   }
+
+
+function createGooglePlaceUrl(searchTerm, key, radius) {
+
+  var latitude = localStorage.getItem("latitude");
+  var longitude = localStorage.getItem("longitude");
+
+  // Replace spaces with special character for URL only
+  var urlSearchTerm = searchTerm.replace(/ /g, "+");
+  var keyText = "?key="
+  var radiusText = "&radius="; //24140 = 15 miles
+
+  var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+
+  // populate JSON url with Google key
+  url += keyText + key;
+  //populate JSON url with radius;
+  url += radiusText + radius;
+  //populate JSON url with lat/longitude
+  url += "&location=" + latitude + "," + longitude;
+
+  // populate JSON url with search term/name of restaurant
+
+  url += "&name=" + urlSearchTerm;
+
+  return url;
+
+}
 
 
 function getAddressesFor(places) {
