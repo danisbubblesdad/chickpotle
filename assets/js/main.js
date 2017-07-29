@@ -59,14 +59,10 @@ function initMap() {
 
 //////////// Geolocation
 
-var latitude;
-var longitude;
-
 var chickfilas;
 var chipotles;
 var candidateChickpotles;
 var chickpotle;
-var test;
 var manualAddressEntered;
 
 if (localStorage.getItem("manualAddressEntered") === "true") {
@@ -82,12 +78,11 @@ if (localStorage.getItem("manualAddressEntered") === "true") {
 
 var findUserLocation = new Promise(function(resolve, reject) {
 
+  // If user came from manual entry flow, do not ask for geolocation again
   if (manualAddressEntered) {
-    latitude = parseFloat(localStorage.getItem("latitude"));
-    longitude = parseFloat(localStorage.getItem("longitude"));
-    resolve();
+    success();
 
-
+  // Otherwise, ask for geolocation
   } else {
 
     if(!navigator.geolocation) {
@@ -110,8 +105,13 @@ var findUserLocation = new Promise(function(resolve, reject) {
 
 
     // Declares global variables
-    localStorage.setItem("latitude", position.coords.latitude);
-    localStorage.setItem("longitude", position.coords.longitude);
+    if(!manualAddressEntered) {
+
+      localStorage.setItem("latitude", position.coords.latitude);
+      localStorage.setItem("longitude", position.coords.longitude);
+
+    }
+
     resolve();
 
 
@@ -192,11 +192,10 @@ findUserLocation.then()
 
   var chipAddress = document.createElement('a');
   chipAddress.textContent = chickpotle.chickfila_address;
-  chipAddress.href ='http://maps.google.com/?q='+ chickpotle.chickfila_address;
+  chipAddress.href ='http://maps.google.com/?q='+ chickpotle.chipotle_address;
   document.getElementById('chipadd').appendChild(chipAddress);
 
   initMap();
   showPage();
   window.localStorage.clear();
 })
- console.log(chickpotle)
