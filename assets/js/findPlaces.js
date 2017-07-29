@@ -5,34 +5,23 @@
 
         // Request google place objects using custom url
 
-
         let promises = []
-
         while(radius > 3000) {
 
           let url = createGooglePlaceUrl(searchTerm, key, radius);
           radius /= 2;
 
-
           let promise = new Promise(function(resolve, reject) {
-
-
             resolve(getJsonQuery(url, searchTerm));
-
           })
 
           promises.push(promise);
-
         }
 
-
         return Promise.all(promises);
-
   }
 
   function getJsonQuery(url, searchTerm){
-
-
     return new Promise(function(resolve, reject) {
 
       let places = [];
@@ -48,16 +37,11 @@
             places.push(place);
           }
         }
-
       }).then(function() {
         resolve(places);
       })
-
-
     })
-
   }
-
 
 function createGooglePlaceUrl(searchTerm, key, radius) {
 

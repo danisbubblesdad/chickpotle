@@ -99,6 +99,25 @@ findUserLocation.then()
   //document.getElementById("chipadd").innerHTML = chickpotle.chipotle_address;
   document.getElementById("duration").innerHTML = Math.floor(chickpotle.duration / 60);
 
+  var streetViewImage = "https://maps.googleapis.com/maps/api/streetview?size=400x200";
+  var chickfilaStreetViewImage = streetViewImage
+                          + "&location="
+                          + chickpotle.chickfila_address.replace(/ /g, "+")
+                          + "&key="
+                          + googleKey;
+
+  var chipotleStreetViewImage = streetViewImage
+                          + "&location="
+                          + chickpotle.chipotle_address.replace(/ /g, "+")
+                          + "&key="
+                          + googleKey;
+
+
+  //
+  //
+  $("#chickfilaStreetView").attr("src", chickfilaStreetViewImage);
+  $("#chipotleStreetView").attr("src", chipotleStreetViewImage);
+
   var chickAddress = document.createElement('a');
   chickAddress.textContent = chickpotle.chickfila_address;
   chickAddress.href ='http://maps.google.com/?q='+ chickpotle.chickfila_address;
