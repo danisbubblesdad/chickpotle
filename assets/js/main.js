@@ -64,6 +64,8 @@ var chipotles;
 var candidateChickpotles;
 var chickpotle;
 var manualAddressEntered;
+var googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
+var defaultRadius = 30000;
 
 if (localStorage.getItem("manualAddressEntered") === "true") {
   manualAddressEntered = true;
@@ -136,8 +138,8 @@ findUserLocation.then()
 }).then(function(results) {
   // Gather names and IDs for all nearby Chick-fil-A and Chipotle restaurants
   return Promise.all([
-    gatherNearbyGooglePlacesFor("Chick-fil-A"),
-    gatherNearbyGooglePlacesFor("Chipotle Mexican Grill")
+    gatherNearbyGooglePlacesFor("Chick-fil-A", googleKey, defaultRadius),
+    gatherNearbyGooglePlacesFor("Chipotle Mexican Grill", googleKey, defaultRadius)
   ])
 }).then(function(results) {
   // Wait until both promises are fulfilled and then assign the place IDs

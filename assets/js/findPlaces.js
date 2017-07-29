@@ -1,5 +1,5 @@
 
-  function gatherNearbyGooglePlacesFor(searchTerm) {
+  function gatherNearbyGooglePlacesFor(searchTerm, key, radius) {
 
 
 
@@ -13,15 +13,15 @@
 
         // Replace spaces with special character for URL only
         var urlSearchTerm = searchTerm.replace(/ /g, "+");
-        var key = "?key=AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
-        var radius = "&radius=50000"; //24140 = 15 miles
+        var keyText = "?key="
+        var radiusText = "&radius="; //24140 = 15 miles
 
         var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 
         // populate JSON url with Google key
-        url += key;
+        url += keyText + key;
         //populate JSON url with radius;
-        url += radius;
+        url += radiusText + radius;
         //populate JSON url with lat/longitude
         url += "&location=" + latitude + "," + longitude;
 
