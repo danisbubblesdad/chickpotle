@@ -1,8 +1,6 @@
 
   function gatherNearbyGooglePlacesFor(searchTerm, key, radius) {
-
-
-
+    
       return new Promise(function(resolve, reject) {
 
         var places = [];
