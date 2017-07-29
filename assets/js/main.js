@@ -34,8 +34,34 @@ findUserLocation.then()
   // Wait until both promises are fulfilled and then assign the place IDs
   // to the appropriate variables
 
-  chickfilas = results[0].pop();
-  chipotles = results[1].pop();
+
+  results.forEach(function(result) {
+    let radiusSetIndexes = [];
+    let optimizedValue;
+    let optimizedIndex;
+    result.forEach(function(radiusSet) {
+      radiusSetIndexes.push(radiusSet.length);
+    })
+
+    // Calculates the optimized number of chick-fil-as in the set of arrays
+    optimizedValue = radiusSetIndexes.find(function(length) {
+      return length < 5;
+    })
+
+    optimizedIndex = radiusSetIndexes.indexOf(optimizedValue);
+
+    if(result[optimizedIndex][0].name == "Chick-fil-A") {
+      chickfilas = result[optimizedIndex];
+    } else {
+      chipotles = result[optimizedIndex];
+    }
+
+  })
+
+
+  //
+  // chickfilas = results[0].pop();
+  // chipotles = results[1].pop();
 }).then(function() {
   // Use the place IDs to query on the addresses; update chickfilas and
   // chipotles objects with appropriate properties

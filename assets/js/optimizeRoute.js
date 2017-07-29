@@ -89,7 +89,6 @@ function calculateTravelTime(candidateChickpotle, stopoverBoolean) {
         // Trip duration is grabbed from the response
         duration = route.legs[0].duration.value;
         // Fulfill promise with travelTime (AKA trip duration)
-        console.log(duration);
         resolve(duration);
       } else {
         // If "OK" callback not received, try again

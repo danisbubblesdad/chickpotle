@@ -3,9 +3,6 @@
       //return new Promise(function(resolve, reject) {
 
 
-
-
-
         // Request google place objects using custom url
 
 
@@ -29,11 +26,7 @@
         }
 
 
-        console.log(promises)
-
         return Promise.all(promises);
-
-      //});
 
   }
 
