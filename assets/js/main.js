@@ -5,7 +5,7 @@ let chipotles;
 let candidateChickpotles;
 let chickpotle;
 let manualAddressEntered;
-let defaultRadius = 50000;
+let defaultRadius = 30000;
 const googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
 
 ////////////// Load screen
@@ -31,6 +31,8 @@ findUserLocation.then()
     gatherNearbyGooglePlacesFor("Chipotle Mexican Grill", googleKey, defaultRadius)
   ])
 }).then(function(results) {
+
+  console.log(results);
 
 
   // Redirect to nofound.html if no results
