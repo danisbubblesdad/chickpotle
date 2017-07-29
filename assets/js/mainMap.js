@@ -17,26 +17,43 @@ function initMap() {
 
 // Set the marker for the user position
 
+var homeIcon = {
+    url: "assets/img/home_icon.png", // url
+    scaledSize: new google.maps.Size(40, 40) // scaled size
+};
+
   var userMarker = new google.maps.Marker({
     position: userLocation,
     map: map,
-    title: "Your location"
+    icon: homeIcon
   });
 
 // Set the chick-fil-a marker
 
+  var chickfilaIcon = {
+      url: "assets/img/chickfila_pin.png", // url
+      scaledSize: new google.maps.Size(40, 40) // scaled size
+  };
+
   var chickfilaMarker = new google.maps.Marker({
     position: chickfilaLocation,
     map: map,
-    title: "Chick-fil-A"
+    title: "Chick-fil-A",
+    icon: chickfilaIcon
   });
 
 // Set the chipotle marker
 
+var chipotleIcon = {
+    url: "assets/img/chipotle_pin.png", // url
+    scaledSize: new google.maps.Size(40, 40) // scaled size
+};
+
   var chipotleMarker = new google.maps.Marker({
     position: chipotleLocation,
     map: map,
-    title: "Chipotle"
+    title: "Chipotle",
+    icon: chipotleIcon
   });
 
 // Adjust zoom to all markers

@@ -58,10 +58,6 @@ findUserLocation.then()
 
   })
 
-
-  //
-  // chickfilas = results[0].pop();
-  // chipotles = results[1].pop();
 }).then(function() {
   // Use the place IDs to query on the addresses; update chickfilas and
   // chipotles objects with appropriate properties
