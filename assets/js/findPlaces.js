@@ -1,30 +1,67 @@
 
   function gatherNearbyGooglePlacesFor(searchTerm, key, radius) {
-      return new Promise(function(resolve, reject) {
+      //return new Promise(function(resolve, reject) {
 
-        let places = [];
 
-        let url = createGooglePlaceUrl(searchTerm, key, radius);
+
+
 
         // Request google place objects using custom url
 
-        $.get(url).then(function(googlePlaceObject) {
 
-          // Iterate through each object to extract place_id
-          for(i=0; i<googlePlaceObject.results.length; i++) {
-            let result = googlePlaceObject.results[i];
-            if (searchTerm == result.name) {
-              // create new object
-              let place = {name: result.name, place_id: result.place_id}
-              // assign object to array
-              places.push(place);
-            }
+        let promises = []
+
+        while(radius > 3000) {
+
+          let url = createGooglePlaceUrl(searchTerm, key, radius);
+          radius /= 2;
+
+
+          let promise = new Promise(function(resolve, reject) {
+
+
+            resolve(getJsonQuery(url, searchTerm));
+
+          })
+
+          promises.push(promise);
+
+        }
+
+
+        console.log(promises)
+
+        return Promise.all(promises);
+
+      //});
+
+  }
+
+  function getJsonQuery(url, searchTerm){
+
+
+    return new Promise(function(resolve, reject) {
+
+      let places = [];
+      $.get(url).then(function(googlePlaceObject) {
+
+        // Iterate through each object to extract place_id
+        for(i=0; i<googlePlaceObject.results.length; i++) {
+          let result = googlePlaceObject.results[i];
+          if (searchTerm == result.name) {
+            // create new object
+            let place = {name: result.name, place_id: result.place_id}
+            // assign object to array
+            places.push(place);
           }
-        }).then(function() {
-          // return the array to the promise
-          resolve(places);
-        })
-      });
+        }
+
+      }).then(function() {
+        resolve(places);
+      })
+
+
+    })
 
   }
 

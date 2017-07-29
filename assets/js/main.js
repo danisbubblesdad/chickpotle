@@ -5,7 +5,7 @@ let chipotles;
 let candidateChickpotles;
 let chickpotle;
 let manualAddressEntered;
-let defaultRadius = 30000;
+let defaultRadius = 50000;
 const googleKey = "AIzaSyDYoGQjMzQNVUCupkIb99CiXB_Qo_CQZYY";
 
 ////////////// Load screen
@@ -33,8 +33,9 @@ findUserLocation.then()
 }).then(function(results) {
   // Wait until both promises are fulfilled and then assign the place IDs
   // to the appropriate variables
-  chickfilas = results[0];
-  chipotles = results[1];
+
+  chickfilas = results[0].pop();
+  chipotles = results[1].pop();
 }).then(function() {
   // Use the place IDs to query on the addresses; update chickfilas and
   // chipotles objects with appropriate properties
