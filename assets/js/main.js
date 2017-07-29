@@ -31,9 +31,16 @@ findUserLocation.then()
     gatherNearbyGooglePlacesFor("Chipotle Mexican Grill", googleKey, defaultRadius)
   ])
 }).then(function(results) {
+
+
+  // Redirect to nofound.html if no results
+
+  if(results[0][0] == "" || results[1][0] == "") {
+    window.location.replace("notfound.html");
+  }
+
   // Wait until both promises are fulfilled and then assign the place IDs
   // to the appropriate variables
-
 
   results.forEach(function(result) {
     let radiusSetIndexes = [];
@@ -95,6 +102,7 @@ findUserLocation.then()
 
   chickpotle = results[0];
 
+
   //document.getElementById("chickadd").innerHTML = chickpotle.chickfila_address;
   //document.getElementById("chipadd").innerHTML = chickpotle.chipotle_address;
   document.getElementById("duration").innerHTML = Math.floor(chickpotle.duration / 60);
@@ -127,6 +135,8 @@ findUserLocation.then()
   chipAddress.textContent = chickpotle.chipotle_address;
   chipAddress.href ='http://maps.google.com/?q='+ chickpotle.chipotle_address;
   document.getElementById('chipadd').appendChild(chipAddress);
+
+
 
   initMap();
   showPage();
