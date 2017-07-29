@@ -22,7 +22,6 @@ function getCoordinates() {
   var latitude = place.geometry.location.lat();
   var longitude = place.geometry.location.lng();
   var coords = latitude + ", " + longitude;
-  console.log(coords);
 
 // Store the coordinates so they can be used by the functions called in main.html
   localStorage.setItem("latitude", latitude);
@@ -33,8 +32,6 @@ function getCoordinates() {
 
 
 button = document.getElementById("goButton");
-
-console.log(button);
 
 button.onclick = function() {
   window.location.replace("main.html");
