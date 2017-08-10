@@ -57,6 +57,7 @@ findUserLocation.then()
       return length < 5;
     })
 
+    console.log(radiusSetIndexes);
     optimizedIndex = radiusSetIndexes.indexOf(optimizedValue);
 
     if(result[optimizedIndex][0].name == "Chick-fil-A") {
