@@ -6,6 +6,7 @@
         // Request google place objects using custom url
 
         let promises = []
+
         while(radius > 300) {
 
           let url = createGooglePlaceUrl(searchTerm, key, radius);
